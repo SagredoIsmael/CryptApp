@@ -9,7 +9,6 @@ const AppStackNavigator = createStackNavigator({
       header: null
     }
   },
-  },
 })
 
 const AppNavigator = createAppContainer(AppStackNavigator)

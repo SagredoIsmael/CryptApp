@@ -1,3 +1,6 @@
 export default {
-  primaryColor: '#037bfc'
+  primaryColor: '#0F9AFB',
+  tabIconSelected: "#2f95dc",
+  secondaryColor: '#B8DFFA',
+  greyColor: '#F0F4F7'
 }
