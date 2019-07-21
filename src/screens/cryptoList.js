@@ -57,7 +57,7 @@ class CryptoList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.greyColor,
+    backgroundColor: Colors.darkGreyColor,
   },
   item: {
     padding: 16,
