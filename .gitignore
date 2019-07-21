@@ -30,6 +30,9 @@ build/
 local.properties
 *.iml
 
+#Android(for debugging in device)
+/android/local.properties
+
 # node.js
 #
 node_modules/
