@@ -1,4 +1,4 @@
-import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO } from './types'
+import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, UPDATE_DATA_CRYPTO } from './types'
 import Binance from 'binance-api-react-native'
 const client = Binance()
 
@@ -11,6 +11,13 @@ export const requestDataCrypto = () => {
 export const successDataCrypto = dataCrypto => {
   return {
     type: SUCCESS_DATA_CRYPTO,
+    payload: dataCrypto
+  }
+}
+
+export const updateDataCrypto = dataCrypto => {
+  return {
+    type: UPDATE_DATA_CRYPTO,
     payload: dataCrypto
   }
 }
