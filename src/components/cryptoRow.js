@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Button } from 'react-native'
 import Colors from '../utils/constants'
 
 const CryptoRow = ({ title, description, image_url }) => (
+  //TODO action 'ADD_CRYPTO_FAVORITE when press button favorite'
     <View style={styles.container}>
         <Image source={ require('../utils/images/bitcoin.png') } />
         <View style={styles.container_text}>
@@ -13,9 +14,8 @@ const CryptoRow = ({ title, description, image_url }) => (
                 {description}
             </Text>
             <Button
-              title="Add to favourites"
-              color={Colors.buttonFavouriteColor}
-              accessibilityLabel="Learn more about this purple button"
+              title="Add to favorites"
+              color={Colors.buttonFavoriteColor}
               />
         </View>
     </View>

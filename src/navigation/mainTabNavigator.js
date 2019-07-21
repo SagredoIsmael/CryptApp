@@ -2,7 +2,7 @@ import React from "react"
 import {Platform, Image} from "react-native"
 import {createStackNavigator, createBottomTabNavigator} from "react-navigation"
 import CryptoListScreen from "../screens/cryptoList"
-import CryptoFavouriteScreen from "../screens/cryptoFavourite"
+import CryptoFavoriteScreen from "../screens/cryptoFavorite"
 import Colors from '../utils/constants'
 
 const CryptoListStack = createStackNavigator({Cryptos: CryptoListScreen});
@@ -30,9 +30,9 @@ CryptoListStack.navigationOptions = {
   }
 }
 
-const CryptoFavouriteStack = createStackNavigator({Favourites: CryptoFavouriteScreen});
+const CryptoFavoriteStack = createStackNavigator({Favorites: CryptoFavoriteScreen});
 
-CryptoFavouriteStack.navigationOptions = {
+CryptoFavoriteStack.navigationOptions = {
   tabBarLabel: "FAV",
   tabBarIcon: ({ focused, horizontal, tintColor }) => {
         {
@@ -55,4 +55,4 @@ CryptoFavouriteStack.navigationOptions = {
   }
 }
 
-export default createBottomTabNavigator({CryptoListStack, CryptoFavouriteStack});
+export default createBottomTabNavigator({CryptoListStack, CryptoFavoriteStack});

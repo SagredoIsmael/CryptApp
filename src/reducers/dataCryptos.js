@@ -1,4 +1,4 @@
-import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, UPDATE_DATA_CRYPTO } from '../actions/types'
+import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO } from '../actions/types'
 import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
@@ -18,12 +18,19 @@ export default (state = initialState, action) => {
       }
 
     case SUCCESS_DATA_CRYPTO:
-      _retrieveData()
       const items = Object.entries(action.payload).map((e) => ( { [e[0]]: e[1] } ))
-      items.forEach(item => { item.isFavourite = false })
+      items.forEach(item => { item.isFavorite = false })
+      _comprobeLocaldata(items).then((response) => {
+        if (response != null)
 
-      /*Save in local*/
-      _storeData(items)
+
+        /*Save in local*/
+        _saveLocalData(items)
+
+      })
+
+
+
 
       return {
         ...state,
@@ -31,9 +38,7 @@ export default (state = initialState, action) => {
         items: items
       }
 
-
-
-    case UPDATE_DATA_CRYPTO:
+    case SHOW_DATA_CRYPTO:
       return {
         ...state,
         loading: false,
@@ -54,21 +59,30 @@ export default (state = initialState, action) => {
 }
 
 
-const _storeData = async (data) => {
-        try {
-            await AsyncStorage.setItem('cryptosJSON', JSON.stringify(data))
-        } catch (error) {
-            console.log('error saving local data', error)
-        }
-    }
-
-const _retrieveData = async () => {
-    try {
-        const value = await AsyncStorage.getItem('cryptosJSON')
-        if (value !== null) {
-          console.log(JSON.parse(value))
-        }
+const _saveLocalData = async (data) => {
+  try {
+    await AsyncStorage.setItem('cryptosJSON', JSON.stringify(data))
     } catch (error) {
-        console.log('error get local data', error)
+      console.log('error saving local data', error)
     }
+  }
+
+const _comprobeLocaldata = async (newItems) => {
+  try {
+    const value = await AsyncStorage.getItem('cryptosJSON')
+    if (value != null){
+      let oldItems = JSON.parse(value)
+
+      /*If local data exist, update local data crypto keeping the actual local favorites*/
+      oldItems.filter(item => item.isFavorite)
+
+      //TODO: update my favorites in newItems from oldItems
+      return
+
+    }else{
+      return newItems
+    }
+  } catch (error) {
+      console.log('error get local data', error)
+  }
 }
