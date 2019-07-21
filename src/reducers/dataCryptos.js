@@ -20,8 +20,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
-        items: []
+        items: Object.entries(action.payload).map((e) => ( { [e[0]]: e[1] } ))
       }
 
     case ERROR_DATA_CRYPTO:

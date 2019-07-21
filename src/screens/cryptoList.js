@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 
 class CryptoList extends React.Component {
-  static navigationOptions = {
-    header: null
-  }
 
   render() {
     return null
