@@ -1,11 +1,14 @@
 import React from "react"
 import {createStackNavigator, createAppContainer} from "react-navigation"
-import CryptoList from "../screens/cryptoList"
-
+import MainTabNavigator from "./mainTabNavigator"
 
 const AppStackNavigator = createStackNavigator({
   CryptoList: {
-    screen: CryptoList
+    screen: MainTabNavigator,
+    navigationOptions: {
+      header: null
+    }
+  },
   },
 })
 
