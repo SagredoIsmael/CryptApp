@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Button } from 'react-native'
 import Colors from '../utils/constants'
-
 
 const CryptoRow = ({ title, description, image_url }) => (
     <View style={styles.container}>
-        <Image source={{ uri: image_url }} style={styles.photo} />
+        <Image source={ require('../utils/images/bitcoin.png') } />
         <View style={styles.container_text}>
             <Text style={styles.title}>
                 {title}
@@ -13,8 +12,12 @@ const CryptoRow = ({ title, description, image_url }) => (
             <Text style={styles.description}>
                 {description}
             </Text>
+            <Button
+              title="Add to favourites"
+              color={Colors.buttonFavouriteColor}
+              accessibilityLabel="Learn more about this purple button"
+              />
         </View>
-
     </View>
 )
 
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        color: '#000',
+        color: 'black',
     },
     container_text: {
         flex: 1,
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
     },
+
 })
 
 export default CryptoRow

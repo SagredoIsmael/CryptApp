@@ -7,7 +7,6 @@ import CryptoRow from '../components/cryptoRow'
 
 class CryptoList extends React.Component {
 
-
   static navigationOptions = ({navigation}) => {
     return {
       title: 'Cryptos now',
@@ -29,13 +28,16 @@ class CryptoList extends React.Component {
     this.props.fetchCryptos()
   }
 
-  renderItem = ({ item }) => (
-    <CryptoRow
-        title={Object.keys(item)[0]}
-        description={Object.keys(item)[0]}
-
-    />
-  )
+  renderItem = ({ item }) => {
+    const dataItem = Object.values(item)[0]
+    const itemInfo = "Bid price:" + dataItem.bidPrice + "\nBid Qty:" + dataItem.bidQty + "\nAsk price:" + dataItem.askPrice + "\nAsk Qty:" + dataItem.askQty
+    return (
+      <CryptoRow
+          title={dataItem.symbol}
+          description={itemInfo}
+      />
+    )
+  }
 
   _onRefresh = () => this.props.fetchCryptos()
 

@@ -1,10 +1,9 @@
 import React from "react"
-import {Platform} from "react-native"
+import {Platform, Image} from "react-native"
 import {createStackNavigator, createBottomTabNavigator} from "react-navigation"
 import CryptoListScreen from "../screens/cryptoList"
 import CryptoFavouriteScreen from "../screens/cryptoFavourite"
 import Colors from '../utils/constants'
-import { Image } from 'react-native'
 
 const CryptoListStack = createStackNavigator({Cryptos: CryptoListScreen});
 
