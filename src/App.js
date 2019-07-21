@@ -1,7 +1,7 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
-import AppNavigator from './navigation/AppNavigator'
+import AppNavigator from './navigation/appNavigator'
 import configureStore from "./configureStore"
 import Binance from 'binance-api-react-native'
 const client = Binance()
