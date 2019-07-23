@@ -2,6 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import AppNavigator from './navigation/appNavigator'
+import Colors from './utils/constants'
 import configureStore from "./configureStore"
 import Binance from 'binance-api-react-native'
 const client = Binance()
@@ -36,6 +37,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bedce2',
+    backgroundColor: Colors.primaryColor,
   },
 })

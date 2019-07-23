@@ -1,5 +1,4 @@
 import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_LOCAL_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO, SHOW_MODAL_OFFLINE, HIDDEN_MODAL_OFFLINE } from './types'
-import {retrieveLocalData} from '../reducers/dataCryptos'
 import Binance from 'binance-api-react-native'
 import NetInfo from "@react-native-community/netinfo"
 import AsyncStorage from '@react-native-community/async-storage';
@@ -66,7 +65,6 @@ export const fetchCryptos = () => (dispatch, getState) => {
 
 const _fetchCryptoAPI = async(dispatch, getState) => {
   /*Case: With connection*/
-
   if (getState().cryptos.loading) {
     return
   }

@@ -27,17 +27,17 @@ const CryptoRow = ({ title, description, percent, isFavorite, addFavoriteCrypto,
 )
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        padding: 10,
-        marginLeft:20,
-        marginRight:20,
-        marginTop: 10,
-        marginBottom: 10,
-        borderRadius: 5,
-        backgroundColor: Colors.secondaryColor,
-        elevation: 2,
+  container: {
+      flex: 1,
+      flexDirection: 'row',
+      padding: 10,
+      marginLeft:20,
+      marginRight:20,
+      marginTop: 10,
+      marginBottom: 10,
+      borderRadius: 5,
+      backgroundColor: Colors.secondaryColor,
+      elevation: 2,
     },
     icon: {
       height: 20,

@@ -20,14 +20,12 @@ class CryptoBest extends React.Component {
   }
 
   _calculateBest = (cryptos) => {
-    //return Math.max.apply(Math, cryptos.map(item => (item.priceChangePercent) ))
     return cryptos.reduce((prev, current) =>  ( (prev.priceChangePercent > current.priceChangePercent) ? prev : current ) )
   }
 
   render() {
     const { cryptos } = this.props
     let bestCrypto = this._calculateBest(cryptos.items)
-    console.log("@@", bestCrypto);
     return (
       <View style={styles.container}>
           <View style={styles.mainView}>
