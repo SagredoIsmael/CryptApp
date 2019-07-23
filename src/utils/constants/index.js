@@ -4,6 +4,7 @@ export default {
   secondaryColor: '#B8DFFA',
   thirdColor: '#d5e6f2',
   greyColor: '#F0F4F7',
+  lightGreyColor: '#fcfcfc',
   darkGreyColor: '#D9DBDE',
   buttonFavoriteColor: "#841584",
   starColor: '#fedc6d'

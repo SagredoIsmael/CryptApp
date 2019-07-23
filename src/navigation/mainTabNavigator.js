@@ -21,7 +21,7 @@ CryptoListStack.navigationOptions = {
       },
   tabBarOptions: {
   activeTintColor: 'black',
-  inactiveTintColor: 'grey',
+  inactiveTintColor: Colors.lightGreyColor,
   labelStyle: {
     fontSize: 10,
   },
@@ -46,7 +46,7 @@ CryptoFavoriteStack.navigationOptions = {
       },
   tabBarOptions: {
   activeTintColor: 'black',
-  inactiveTintColor: 'grey',
+  inactiveTintColor: Colors.lightGreyColor,
   labelStyle: {
     fontSize: 10,
   },
@@ -71,7 +71,7 @@ CryptoBestStack.navigationOptions = {
       },
   tabBarOptions: {
   activeTintColor: 'black',
-  inactiveTintColor: 'grey',
+  inactiveTintColor: Colors.lightGreyColor,
   labelStyle: {
     fontSize: 10,
   },

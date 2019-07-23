@@ -19,13 +19,23 @@ class CryptoBest extends React.Component {
     }
   }
 
+  _calculateBest = (cryptos) => {
+    //return Math.max.apply(Math, cryptos.map(item => (item.priceChangePercent) ))
+    return cryptos.reduce((prev, current) =>  ( (prev.priceChangePercent > current.priceChangePercent) ? prev : current ) )
+  }
+
   render() {
     const { cryptos } = this.props
+    let bestCrypto = this._calculateBest(cryptos.items)
+    console.log("@@", bestCrypto);
     return (
       <View style={styles.container}>
           <View style={styles.mainView}>
-              <Text style={styles.alertTitle}>The top major gainer of the last 24h is.. </Text>
-              <Text style={styles.alertTitle}>ETHBTC </Text>
+              <Text style={styles.alertTitle}>The top major gainer of the day is.. </Text>
+              <Text style={styles.alertTitle}>{bestCrypto.symbol} </Text>
+              <Text style={(bestCrypto.priceChangePercent >= 0 ) ? styles.percentPositive : styles.percentNegative}>
+                  {(bestCrypto.priceChangePercent >= 0 ) ? "+" : ""} {bestCrypto.priceChangePercent}
+              </Text>
               <Image style={styles.image} source={ require('../utils/images/trophy.png') } />
           </View>
       </View>
@@ -55,14 +65,28 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: 'center',
     padding: 10,
-    height: '28%'
+    height: '20%'
   },
   image:{
     height: 80,
     width: 80,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  percentPositive: {
+      color: 'green',
+      fontSize: 22,
+      textAlign: 'center',
+      padding: 10,
+      height: '15%'
+  },
+  percentNegative: {
+      color: 'red',
+      fontSize: 22,
+      textAlign: 'center',
+      padding: 10,
+      height: '15%'
+  },
 })
 
 const mapStateToProps = state => {

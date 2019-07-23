@@ -35,6 +35,7 @@ class CryptoList extends React.Component {
       <CryptoRow
           title={item.symbol}
           description={itemInfo}
+          percent={item.priceChangePercent}
           isFavorite={item["isFavorite"]}
       />
     )

@@ -4,7 +4,7 @@ import Colors from '../utils/constants'
 import { connect } from 'react-redux'
 import { addFavoriteCrypto, removeFavoriteCrypto } from '../actions/cryptos'
 
-const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto, removeFavoriteCrypto }) => (
+const CryptoRow = ({ title, description, percent, isFavorite, addFavoriteCrypto, removeFavoriteCrypto }) => (
     <View style={styles.container}>
         <Image style={styles.icon} source={ require('../utils/images/bitcoin.png') } />
         <View style={styles.container_text}>
@@ -15,9 +15,14 @@ const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto, removeFa
                 {description}
             </Text>
         </View>
-        <TouchableOpacity onPress={() => isFavorite? removeFavoriteCrypto(title) : addFavoriteCrypto(title)}>
-          <Image style={styles.imageFavorite} source={isFavorite? require('../utils/images/starSubscribe.png') : require('../utils/images/starUnsubscribe.png')} />
-        </TouchableOpacity>
+        <View style={styles.container_image}>
+          <TouchableOpacity onPress={() => isFavorite? removeFavoriteCrypto(title) : addFavoriteCrypto(title)}>
+            <Image style={styles.imageFavorite} source={isFavorite? require('../utils/images/starSubscribe.png') : require('../utils/images/starUnsubscribe.png')} />
+          </TouchableOpacity>
+          <Text style={(percent >= 0 ) ? styles.percentPositive : styles.percentNegative}>
+              {(percent >= 0 ) ? "+" : ""} {percent}
+          </Text>
+        </View>
     </View>
 )
 
@@ -48,14 +53,32 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginLeft: 12,
     },
+    container_image: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
     description: {
         fontSize: 11,
         fontStyle: 'italic',
     },
+    percentPositive: {
+        color: 'green',
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginTop:20,
+    },
+    percentNegative: {
+        color: 'red',
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginTop:20,
+    },
     imageFavorite:{
       height: 40,
       width: 40,
-      marginRight:15,
       marginTop:15,
     }
 

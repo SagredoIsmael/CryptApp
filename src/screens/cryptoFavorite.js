@@ -20,7 +20,7 @@ class CryptoFavorite extends React.Component {
   }
 
   renderItem = ({ item }) => {
-    const itemInfo = "Bid price:" + item.bidPrice + "\nBid Qty:" + item.bidQty + "\nAsk price:" + item.askPrice + "\nAsk Qty:" + item.askQty
+    const itemInfo = "Bid price: " + item.bidPrice + "\nBid Qty: " + item.bidQty + "\nAsk price: " + item.askPrice + "\nAsk Qty: " + item.askQty
     return (
       <CryptoRow
           title={item.symbol}
