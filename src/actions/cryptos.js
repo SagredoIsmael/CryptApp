@@ -62,7 +62,7 @@ const _fetchCryptoAPI = async(dispatch, getState) => {
   }
 
   dispatch(requestDataCrypto())
-  const newData = await client.allBookTickers()
+  const newData = await client.dailyStats()
   if (newData != null){
     _checkLocaldata().then((localData) => {
       localData? dispatch(successDataCrypto(newData, localData)) : dispatch(successDataCrypto(newData))

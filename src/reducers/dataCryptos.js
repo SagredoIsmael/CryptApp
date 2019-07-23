@@ -19,18 +19,16 @@ export default (state = initialState, action) => {
 
     case SUCCESS_DATA_CRYPTO:
       /*Mapping to array objects*/
-      let items = Object.entries(action.payload.data.newData).map((e) => ( { [e[0]]: e[1] } ))
+      let items = action.payload.data.newData
 
       /*If local data exist, update local data crypto keeping the actual local favorites*/
       if (action.payload.data.localData){
         /*Find my favorites and get name (name crypto is our ID)*/
-        let myFavorites = action.payload.data.localData.filter(item => (item.isFavorite == true)).map(item => (Object.keys(item)[0]))
+        let myFavorites = action.payload.data.localData.filter(item => (item.isFavorite == true)).map(item => (item.symbol))
 
         /*Replace 'isFavorite' property of myFavorites items*/
         let finalItems = items.map(item => {
-          const dataItem = Object.values(item)[0]
-
-          if (myFavorites.indexOf(dataItem.symbol) > -1){
+          if (myFavorites.indexOf(item.symbol) > -1){
             return {...item, isFavorite : true}
           }else{
             return {...item, isFavorite : false}
@@ -67,7 +65,7 @@ export default (state = initialState, action) => {
 
     case ADD_FAVORITE_CRYPTO:
     /*Find my item in cryptos and change property 'favorite'*/
-     let updatedItems = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : true} : item})
+     let updatedItems = state.items.map(item => { return item.symbol == action.payload? {...item, isFavorite : true} : item})
 
      /*Save in local*/
      _saveLocalData(updatedItems)
@@ -79,7 +77,7 @@ export default (state = initialState, action) => {
 
     case REMOVE_FAVORITE_CRYPTO:
     /*Find my item in cryptos and change property 'favorite'*/
-     let updatedCryptos = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : false} : item})
+     let updatedCryptos = state.items.map(item => { return item.symbol == action.payload? {...item, isFavorite : false} : item})
 
      /*Save in local*/
      _saveLocalData(updatedCryptos)

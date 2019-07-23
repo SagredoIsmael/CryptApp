@@ -9,7 +9,7 @@ class CryptoList extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      title: 'Cryptos now',
+      title: 'Crypto pairs now',
       headerTitleStyle: {
         color: 'white',
         fontSize: 28
@@ -29,11 +29,10 @@ class CryptoList extends React.Component {
   }
 
   renderItem = ({ item }) => {
-    const dataItem = Object.values(item)[0]
-    const itemInfo = "Bid price:" + dataItem.bidPrice + "\nBid Qty:" + dataItem.bidQty + "\nAsk price:" + dataItem.askPrice + "\nAsk Qty:" + dataItem.askQty
+    const itemInfo = "Bid price:" + item.bidPrice + "\nBid Qty:" + item.bidQty + "\nAsk price:" + item.askPrice + "\nAsk Qty:" + item.askQty
     return (
       <CryptoRow
-          title={dataItem.symbol}
+          title={item.symbol}
           description={itemInfo}
           isFavorite={item["isFavorite"]}
       />

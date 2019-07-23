@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     imageFavorite:{
-      height: 60,
-      width: 60,
+      height: 40,
+      width: 40,
       marginRight:15,
       marginTop:15,
     }
