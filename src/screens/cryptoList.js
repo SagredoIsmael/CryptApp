@@ -35,6 +35,7 @@ class CryptoList extends React.Component {
       <CryptoRow
           title={dataItem.symbol}
           description={itemInfo}
+          isFavorite={item["isFavorite"]}
       />
     )
   }

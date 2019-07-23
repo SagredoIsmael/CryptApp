@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, Button } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity  } from 'react-native'
 import Colors from '../utils/constants'
+import { connect } from 'react-redux'
+import { addFavoriteCrypto } from '../actions/cryptos'
 
-const CryptoRow = ({ title, description, image_url }) => (
-  //TODO action 'ADD_CRYPTO_FAVORITE when press button favorite'
+const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto }) => (
     <View style={styles.container}>
-        <Image source={ require('../utils/images/bitcoin.png') } />
+        <Image style={styles.icon} source={ require('../utils/images/bitcoin.png') } />
         <View style={styles.container_text}>
             <Text style={styles.title}>
                 {title}
@@ -13,11 +14,10 @@ const CryptoRow = ({ title, description, image_url }) => (
             <Text style={styles.description}>
                 {description}
             </Text>
-            <Button
-              title="Add to favorites"
-              color={Colors.buttonFavoriteColor}
-              />
         </View>
+        <TouchableOpacity onPress={() => addFavoriteCrypto(title)}>
+          <Image style={styles.imageFavorite} source={isFavorite? require('../utils/images/starSubscribe.png') : require('../utils/images/starUnsubscribe.png')} />
+        </TouchableOpacity>
     </View>
 )
 
@@ -26,33 +26,53 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         padding: 10,
-        marginLeft:16,
-        marginRight:16,
-        marginTop: 8,
-        marginBottom: 8,
+        marginLeft:20,
+        marginRight:20,
+        marginTop: 10,
+        marginBottom: 10,
         borderRadius: 5,
         backgroundColor: Colors.secondaryColor,
         elevation: 2,
     },
+    icon: {
+      height: 20,
+      width: 20,
+      marginTop: 10,
+    },
     title: {
-        fontSize: 16,
+        fontSize: 20,
         color: 'black',
     },
     container_text: {
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
-        justifyContent: 'center',
     },
     description: {
         fontSize: 11,
         fontStyle: 'italic',
     },
-    photo: {
-        height: 50,
-        width: 50,
-    },
+    imageFavorite:{
+      height: 60,
+      width: 60,
+      marginRight:15,
+      marginTop:15,
+    }
 
 })
 
-export default CryptoRow
+const mapStateToProps = state => {
+  return {
+    cryptos: state.cryptos,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFavoriteCrypto: (nameCrypto) => {
+      dispatch(addFavoriteCrypto(nameCrypto))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CryptoRow)
