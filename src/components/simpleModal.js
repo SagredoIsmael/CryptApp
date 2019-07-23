@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
    alignItems: 'center',
    marginTop: (Platform.OS == 'ios') ? 20 : 0
   },
-
   mainView:{
     alignItems: 'center',
     justifyContent: 'center',
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderRadius:7,
   },
-
   alertTitle:{
     fontSize: 22,
     color: "#fff",
@@ -70,14 +68,12 @@ const styles = StyleSheet.create({
       padding: 10,
       height: '45%'
     },
-
   buttonStyle: {
       width: '50%',
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center'
   },
-
   TextStyle:{
       color:'#fff',
       textAlign:'center',

@@ -20,13 +20,13 @@ CryptoListStack.navigationOptions = {
         }
       },
   tabBarOptions: {
-  activeTintColor: Colors.primaryColor,
-  inactiveTintColor: Colors.darkGreyColor,
+  activeTintColor: 'black',
+  inactiveTintColor: 'grey',
   labelStyle: {
     fontSize: 10,
   },
   style: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.thirdColor,
   },
   }
 }
@@ -45,13 +45,13 @@ CryptoFavoriteStack.navigationOptions = {
         }
       },
   tabBarOptions: {
-  activeTintColor: Colors.primaryColor,
-  inactiveTintColor: Colors.darkGreyColor,
+  activeTintColor: 'black',
+  inactiveTintColor: 'grey',
   labelStyle: {
     fontSize: 10,
   },
   style: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.thirdColor,
   },
   }
 }
@@ -70,13 +70,13 @@ CryptoBestStack.navigationOptions = {
         }
       },
   tabBarOptions: {
-  activeTintColor: Colors.primaryColor,
-  inactiveTintColor: Colors.darkGreyColor,
+  activeTintColor: 'black',
+  inactiveTintColor: 'grey',
   labelStyle: {
     fontSize: 10,
   },
   style: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.thirdColor,
   },
   }
 }
