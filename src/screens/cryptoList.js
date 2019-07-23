@@ -4,6 +4,7 @@ import { fetchCryptos } from '../actions/cryptos'
 import Colors from '../utils/constants'
 import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native'
 import CryptoRow from '../components/cryptoRow'
+import ModalCustom from '../components/simpleModal'
 
 class CryptoList extends React.Component {
 
@@ -42,16 +43,19 @@ class CryptoList extends React.Component {
   _onRefresh = () => this.props.fetchCryptos()
 
   render() {
-    const { cryptos, loading } = this.props
+    const { cryptos, loading, isVisibleModal } = this.props
     return (
-      <FlatList
-        refreshControl = {
-          <RefreshControl refreshing = {loading} onRefresh = {this._onRefresh} />
-        }
-        styles={styles.container}
-        data={cryptos.items}
-        renderItem={this.renderItem}
-      />
+      <View>
+        <FlatList
+          refreshControl = {
+            <RefreshControl refreshing = {loading} onRefresh = {this._onRefresh} />
+          }
+          styles={styles.container}
+          data={cryptos.items}
+          renderItem={this.renderItem}
+        />
+        { isVisibleModal? <ModalCustom title={"Mode offline active"} description={"The local crypto pairs database will be displayed"}/> : null }
+      </View>
     )
   }
 }
@@ -72,6 +76,7 @@ const mapStateToProps = state => {
   return {
     cryptos: state.cryptos,
     loading: state.cryptos.loading,
+    isVisibleModal: state.UI.isOpenModalOffline,
   }
 }
 

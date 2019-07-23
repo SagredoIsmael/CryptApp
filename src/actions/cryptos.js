@@ -1,4 +1,4 @@
-import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_LOCAL_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO } from './types'
+import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_LOCAL_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO, SHOW_MODAL_OFFLINE, HIDDEN_MODAL_OFFLINE } from './types'
 import {retrieveLocalData} from '../reducers/dataCryptos'
 import Binance from 'binance-api-react-native'
 import NetInfo from "@react-native-community/netinfo"
@@ -39,11 +39,21 @@ export const removeFavoriteCrypto = nameCrypto => {
   }
 }
 
-
-
 export const errorDataCrypto = () => {
   return {
     type: ERROR_DATA_CRYPTO
+  }
+}
+
+export const showModalOffline = () => {
+  return {
+    type: SHOW_MODAL_OFFLINE
+  }
+}
+
+export const hiddenModalOffline = () => {
+  return {
+    type: HIDDEN_MODAL_OFFLINE
   }
 }
 
@@ -76,7 +86,12 @@ const _fetchCryptoAPI = async(dispatch, getState) => {
 const _getCryptoLocal = (dispatch, getState) => {
   /*Case: No connection, get local data*/
   _checkLocaldata().then((response) => {
-    response? dispatch(showLocalDataCrypto(response)) : dispatch(errorDataCrypto(response))
+    if (response != null){
+      dispatch(showModalOffline())
+      dispatch(showLocalDataCrypto(response))
+    }else{
+      dispatch(errorDataCrypto(response))
+    }
   })
 }
 
