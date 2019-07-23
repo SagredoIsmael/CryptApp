@@ -1,4 +1,4 @@
-import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO } from '../actions/types'
+import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO  } from '../actions/types'
 import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
@@ -18,19 +18,23 @@ export default (state = initialState, action) => {
       }
 
     case SUCCESS_DATA_CRYPTO:
+      /*Mapping to array objects*/
       const items = Object.entries(action.payload).map((e) => ( { [e[0]]: e[1] } ))
+      /*Add favorite property*/
       items.forEach(item => { item.isFavorite = false })
-      _comprobeLocaldata(items).then((response) => {
-        if (response != null)
+
+      _checkLocaldata(items).then((response) => {
 
 
         /*Save in local*/
-        _saveLocalData(items)
+        _saveLocalData(response)
 
+        return {
+          ...state,
+          loading: false,
+          items: response
+        }
       })
-
-
-
 
       return {
         ...state,
@@ -43,6 +47,24 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         items: action.payload
+      }
+
+    case ADD_FAVORITE_CRYPTO:
+    /*Find my item in cryptos and change property 'favorite'*/
+     let updatedItems = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : true} : item})
+
+      return {
+        ...state,
+        items: updatedItems
+      }
+
+    case REMOVE_FAVORITE_CRYPTO:
+    /*Find my item in cryptos and change property 'favorite'*/
+     let updatedCryptos = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : false} : item})
+
+      return {
+        ...state,
+        items: updatedCryptos
       }
 
     case ERROR_DATA_CRYPTO:
@@ -67,22 +89,20 @@ const _saveLocalData = async (data) => {
     }
   }
 
-const _comprobeLocaldata = async (newItems) => {
+const _checkLocaldata = async (newItems) => {
   try {
     const value = await AsyncStorage.getItem('cryptosJSON')
     if (value != null){
-      let oldItems = JSON.parse(value)
+      let localItems = JSON.parse(value)
 
       /*If local data exist, update local data crypto keeping the actual local favorites*/
-      oldItems.filter(item => item.isFavorite)
+      localItems.filter(item => item.isFavorite)
 
-      //TODO: update my favorites in newItems from oldItems
-      return
+      console.log(localItems);
 
-    }else{
-      return newItems
     }
   } catch (error) {
       console.log('error get local data', error)
   }
+  return newItems
 }

@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity  } from 'react-native'
 import Colors from '../utils/constants'
 import { connect } from 'react-redux'
-import { addFavoriteCrypto } from '../actions/cryptos'
+import { addFavoriteCrypto, removeFavoriteCrypto } from '../actions/cryptos'
 
-const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto }) => (
+const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto, removeFavoriteCrypto }) => (
     <View style={styles.container}>
         <Image style={styles.icon} source={ require('../utils/images/bitcoin.png') } />
         <View style={styles.container_text}>
@@ -15,7 +15,7 @@ const CryptoRow = ({ title, description, isFavorite, addFavoriteCrypto }) => (
                 {description}
             </Text>
         </View>
-        <TouchableOpacity onPress={() => addFavoriteCrypto(title)}>
+        <TouchableOpacity onPress={() => isFavorite? removeFavoriteCrypto(title) : addFavoriteCrypto(title)}>
           <Image style={styles.imageFavorite} source={isFavorite? require('../utils/images/starSubscribe.png') : require('../utils/images/starUnsubscribe.png')} />
         </TouchableOpacity>
     </View>
@@ -71,7 +71,10 @@ const mapDispatchToProps = dispatch => {
   return {
     addFavoriteCrypto: (nameCrypto) => {
       dispatch(addFavoriteCrypto(nameCrypto))
-    }
+    },
+    removeFavoriteCrypto: (nameCrypto) => {
+      dispatch(removeFavoriteCrypto(nameCrypto))
+    },
   }
 }
 

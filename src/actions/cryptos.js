@@ -1,4 +1,4 @@
-import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO } from './types'
+import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO } from './types'
 import {retrieveLocalData} from '../reducers/dataCryptos'
 import Binance from 'binance-api-react-native'
 import NetInfo from "@react-native-community/netinfo"
@@ -24,6 +24,22 @@ export const showDataCrypto = dataCrypto => {
     payload: dataCrypto
   }
 }
+
+export const addFavoriteCrypto = nameCrypto => {
+  return {
+    type: ADD_FAVORITE_CRYPTO,
+    payload: nameCrypto
+  }
+}
+
+export const removeFavoriteCrypto = nameCrypto => {
+  return {
+    type: REMOVE_FAVORITE_CRYPTO,
+    payload: nameCrypto
+  }
+}
+
+
 
 export const errorDataCrypto = () => {
   return {
