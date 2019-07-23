@@ -1,4 +1,4 @@
-import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO } from './types'
+import {REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_LOCAL_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO } from './types'
 import {retrieveLocalData} from '../reducers/dataCryptos'
 import Binance from 'binance-api-react-native'
 import NetInfo from "@react-native-community/netinfo"
@@ -11,16 +11,16 @@ export const requestDataCrypto = () => {
   }
 }
 
-export const successDataCrypto = dataCrypto => {
+export const successDataCrypto = (newData, localData) => {
   return {
     type: SUCCESS_DATA_CRYPTO,
-    payload: dataCrypto
+    payload: {data : {newData, localData}}
   }
 }
 
-export const showDataCrypto = dataCrypto => {
+export const showLocalDataCrypto = dataCrypto => {
   return {
-    type: SHOW_DATA_CRYPTO,
+    type: SHOW_LOCAL_DATA_CRYPTO,
     payload: dataCrypto
   }
 }
@@ -48,25 +48,46 @@ export const errorDataCrypto = () => {
 }
 
 export const fetchCryptos = () => (dispatch, getState) => {
+  /*Check for connection internet*/
   NetInfo.fetch().then(state => {
     state.isConnected? _fetchCryptoAPI(dispatch, getState) : _getCryptoLocal(dispatch, getState)
   })
 }
 
 const _fetchCryptoAPI = async(dispatch, getState) => {
+  /*Case: With connection*/
+
   if (getState().cryptos.loading) {
     return
   }
+
   dispatch(requestDataCrypto())
-  const data = await client.allBookTickers()
-  data? dispatch(successDataCrypto(data)) : dispatch(errorDataCrypto(data))
+  const newData = await client.allBookTickers()
+  if (newData != null){
+    _checkLocaldata().then((localData) => {
+      localData? dispatch(successDataCrypto(newData, localData)) : dispatch(successDataCrypto(newData))
+    })
+  }else{
+    dispatch(errorDataCrypto(newData))
+    _getCryptoLocal(dispatch, getState)
+  }
 }
 
-const _getCryptoLocal = async(dispatch, getState) => {
-   try {
-     const value = await AsyncStorage.getItem('cryptosJSON')
-     value? dispatch(showDataCrypto(JSON.parse(value))) : dispatch(errorDataCrypto(value))
-   } catch (error) {
-       console.log('error get local data', error)
-   }
+const _getCryptoLocal = (dispatch, getState) => {
+  /*Case: No connection, get local data*/
+  _checkLocaldata().then((response) => {
+    response? dispatch(showLocalDataCrypto(response)) : dispatch(errorDataCrypto(response))
+  })
+}
+
+const _checkLocaldata = async () => {
+  try {
+    const value = await AsyncStorage.getItem('cryptosJSON')
+    if (value != null && JSON.parse(value)){
+      return JSON.parse(value)
+    }
+  } catch (error) {
+      console.log('error get local data', error)
+  }
+  return null
 }

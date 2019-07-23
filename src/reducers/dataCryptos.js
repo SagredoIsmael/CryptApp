@@ -1,5 +1,5 @@
-import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO  } from '../actions/types'
-import AsyncStorage from '@react-native-community/async-storage';
+import { REQUEST_DATA_CRYPTO, SUCCESS_DATA_CRYPTO, ERROR_DATA_CRYPTO, SHOW_LOCAL_DATA_CRYPTO, ADD_FAVORITE_CRYPTO, REMOVE_FAVORITE_CRYPTO  } from '../actions/types'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const initialState = {
   items: [],
@@ -19,30 +19,46 @@ export default (state = initialState, action) => {
 
     case SUCCESS_DATA_CRYPTO:
       /*Mapping to array objects*/
-      const items = Object.entries(action.payload).map((e) => ( { [e[0]]: e[1] } ))
-      /*Add favorite property*/
-      items.forEach(item => { item.isFavorite = false })
+      let items = Object.entries(action.payload.data.newData).map((e) => ( { [e[0]]: e[1] } ))
 
-      _checkLocaldata(items).then((response) => {
+      /*If local data exist, update local data crypto keeping the actual local favorites*/
+      if (action.payload.data.localData){
+        /*Find my favorites and get name (name crypto is our ID)*/
+        let myFavorites = action.payload.data.localData.filter(item => (item.isFavorite == true)).map(item => (Object.keys(item)[0]))
 
+        /*Replace 'isFavorite' property of myFavorites items*/
+        let finalItems = items.map(item => {
+          const dataItem = Object.values(item)[0]
+
+          if (myFavorites.indexOf(dataItem.symbol) > -1){
+            return {...item, isFavorite : true}
+          }else{
+            return {...item, isFavorite : false}
+          }
+        })
 
         /*Save in local*/
-        _saveLocalData(response)
+        _saveLocalData(finalItems)
 
         return {
           ...state,
           loading: false,
-          items: response
+          items: finalItems
         }
-      })
+      }else{
+        items.map(item => { item.isFavorite = false })
 
-      return {
-        ...state,
-        loading: false,
-        items: items
+        /*Save in local*/
+        _saveLocalData(items)
+
+        return {
+          ...state,
+          loading: false,
+          items: items
+        }
       }
 
-    case SHOW_DATA_CRYPTO:
+    case SHOW_LOCAL_DATA_CRYPTO:
       return {
         ...state,
         loading: false,
@@ -53,6 +69,9 @@ export default (state = initialState, action) => {
     /*Find my item in cryptos and change property 'favorite'*/
      let updatedItems = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : true} : item})
 
+     /*Save in local*/
+     _saveLocalData(updatedItems)
+
       return {
         ...state,
         items: updatedItems
@@ -61,6 +80,9 @@ export default (state = initialState, action) => {
     case REMOVE_FAVORITE_CRYPTO:
     /*Find my item in cryptos and change property 'favorite'*/
      let updatedCryptos = state.items.map(item => { return Object.keys(item)[0] == action.payload? {...item, isFavorite : false} : item})
+
+     /*Save in local*/
+     _saveLocalData(updatedCryptos)
 
       return {
         ...state,
@@ -88,21 +110,3 @@ const _saveLocalData = async (data) => {
       console.log('error saving local data', error)
     }
   }
-
-const _checkLocaldata = async (newItems) => {
-  try {
-    const value = await AsyncStorage.getItem('cryptosJSON')
-    if (value != null){
-      let localItems = JSON.parse(value)
-
-      /*If local data exist, update local data crypto keeping the actual local favorites*/
-      localItems.filter(item => item.isFavorite)
-
-      console.log(localItems);
-
-    }
-  } catch (error) {
-      console.log('error get local data', error)
-  }
-  return newItems
-}
